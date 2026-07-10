@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZingBizz — Let's Talk</title>
+<style>
+  .phone-group{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.phone-group select{
+    width:220px;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    background:#fff;
+    font-size:15px;
+    outline:none;
+}
+
+.phone-group input{
+    flex:1;
+}
+
+@media (max-width:768px){
+    .phone-group{
+        flex-direction:column;
+    }
+
+    .phone-group select,
+    .phone-group input{
+        width:100%;
+    }
+}
+  :root{
+    --bg:#000000;
+    --bg-navy:#0a1526;
+    --panel:#0d1420;
+    --red:#e8362e;
+    --ink:#f5f6fa;
+    --ink-dim:#9aa7c2;
+    --ink-faint:#5c6a8a;
+    --line: rgba(255,255,255,0.14);
+    --font-display: 'Poppins', 'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-round: 'Baloo 2', 'Poppins', sans-serif;
+    --font-body: 'Inter', 'Segoe UI', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -5%, rgba(232,54,46,0.12), transparent 60%),
+      radial-gradient(ellipse 700px 600px at 100% 20%, rgba(94,120,255,0.08), transparent 55%),
+      radial-gradient(ellipse 800px 500px at 50% 100%, rgba(232,54,46,0.07), transparent 60%),
+      var(--bg);
+    background-attachment:fixed;
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.5;
+    position:relative;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size:56px 56px;
+    mask-image:radial-gradient(ellipse 100% 60% at 50% 0%, #000 30%, transparent 90%);
+  }
+  ::selection{background:var(--red); color:#fff;}
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--red); outline-offset:3px; border-radius:4px;
+  }
+  ::-webkit-scrollbar{width:10px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(var(--red), #a8241d); border-radius:10px;}
+  ::-webkit-scrollbar-thumb:hover{background:var(--red);}
+  img{max-width:100%; display:block;}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  .wrap{max-width:1440px; margin:0 auto; padding:0 40px;}
+  input, select, textarea, button{font-family:inherit;}
+
+  /* ---------- NAV ---------- */
+  nav{padding:26px 40px; position:sticky; top:0; z-index:100;}
+  .navbar{
+    max-width:1200px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    border:1px solid var(--line); border-radius:999px;
+    padding:12px 14px 12px 22px;
+    background:rgba(10,14,24,0.55);
+    backdrop-filter:blur(18px) saturate(140%);
+    -webkit-backdrop-filter:blur(18px) saturate(140%);
+    box-shadow:0 8px 30px rgba(0,0,0,0.35);
+    transition:border-color .3s, box-shadow .3s;
+  }
+  .navbar:hover{border-color:rgba(232,54,46,0.35);}
+  .logo{display:flex; align-items:center; gap:10px;}
+  .logo .mark{width:26px; height:26px; position:relative; flex:none;}
+  .logo .mark span{position:absolute; width:11px; height:11px;}
+  .logo .mark span:nth-child(1){top:0; left:0; background:var(--ink);}
+  .logo .mark span:nth-child(2){top:0; left:15px; background:transparent;}
+  .logo .mark span:nth-child(3){top:15px; left:0; background:transparent;}
+  .logo .mark span:nth-child(4){top:15px; left:15px; background:var(--ink);}
+  .navlinks{display:flex; align-items:center; gap:34px; font-size:0.98rem; font-weight:600;}
+  .navlinks a{display:flex; align-items:center; gap:4px; color:var(--ink); position:relative; padding:4px 0;}
+  .navlinks a::after{
+    content:""; position:absolute; left:0; bottom:-2px; width:0; height:2px;
+    background:var(--red); transition:width .25s ease;
+  }
+  .navlinks a:hover::after{width:100%;}
+  .navlinks a:hover{color:#fff;}
+  .cta-btn{
+    background:var(--ink); color:#000; font-weight:700; font-size:0.92rem;
+    padding:12px 22px; border-radius:999px; display:inline-flex; align-items:center; gap:6px;
+    transition:transform .25s cubic-bezier(.2,.9,.3,1.3), background .25s, box-shadow .25s; border:1px solid var(--line);
+    position:relative; overflow:hidden;
+  }
+  .cta-btn:hover{transform:translateY(-2px) scale(1.03); background:var(--red); color:#fff; box-shadow:0 10px 24px rgba(232,54,46,0.35);}
+
+  /* ---------- HEADER ---------- */
+  .page-head{padding:70px 0 40px; animation:fadeUp .7s ease both;}
+  .eyebrow{
+    color:var(--ink-dim); letter-spacing:0.22em; font-size:0.8rem; font-weight:600; margin-bottom:14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{
+    content:""; width:26px; height:1px; background:var(--red);
+  }
+  .page-head h1{
+    font-family:var(--font-round); font-weight:700; font-size:clamp(2.6rem,6vw,4.2rem);
+    background:linear-gradient(100deg, #ffffff 40%, #ffb3ad 70%, var(--red) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    text-shadow:0 0 60px rgba(232,54,46,0.25);
+  }
+
+  @keyframes fadeUp{
+    from{opacity:0; transform:translateY(16px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  /* ---------- STEPS ---------- */
+  .steps{padding:50px 0 70px;}
+  .steps-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+  }
+  .step{
+    padding:22px 24px; border:1px solid var(--line); border-radius:16px;
+    background:rgba(255,255,255,0.015);
+    transition:transform .3s ease, border-color .3s ease, background .3s ease;
+    animation:fadeUp .6s ease both;
+  }
+  .step:hover{
+    transform:translateY(-4px);
+    border-color:rgba(232,54,46,0.4);
+    background:rgba(232,54,46,0.04);
+  }
+  .step:nth-child(1){animation-delay:.05s;}
+  .step:nth-child(2){animation-delay:.1s;}
+  .step:nth-child(3){animation-delay:.15s;}
+  .step:nth-child(4){animation-delay:.2s;}
+  .step:nth-child(5){animation-delay:.25s;}
+  .step:nth-child(6){animation-delay:.3s;}
+  .step .label{color:var(--ink-dim); font-size:1rem; font-weight:500;}
+  .step .num{color:var(--red); font-family:var(--font-round); font-weight:800; font-size:2.1rem; margin:0 10px; text-shadow:0 0 20px rgba(232,54,46,0.35);}
+  .step .name{font-family:var(--font-round); font-weight:600; font-size:1.4rem; margin-top:6px;}
+
+  /* ---------- CONTACT SECTION ---------- */
+  .contact{padding:60px 0 100px;}
+  .contact-grid{
+    display:grid; grid-template-columns:0.85fr 1.15fr; gap:60px; align-items:start;
+  }
+  .contact-right{
+    background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    border:1px solid var(--line); border-radius:24px;
+    padding:40px 44px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.6);
+    backdrop-filter:blur(6px);
+  }
+  .contact-left h2{
+    font-family:var(--font-round); font-weight:600; font-size:clamp(1.8rem,3vw,2.4rem); line-height:1.3;
+    margin-bottom:50px;
+    position:relative; padding-left:18px;
+  }
+  .contact-left h2::before{
+    content:""; position:absolute; left:0; top:6px; bottom:6px; width:3px;
+    background:linear-gradient(var(--red), transparent);
+    border-radius:3px;
+  }
+  .rocket-wrap{
+    display:flex; justify-content:center; align-items:flex-start; padding-top:20px;
+    position:relative;
+  }
+  .rocket-wrap::before{
+    content:""; position:absolute; width:260px; height:260px; border-radius:50%;
+    background:radial-gradient(circle, rgba(232,54,46,0.22), transparent 70%);
+    filter:blur(10px); z-index:0;
+  }
+  .rocket{width:220px; position:relative; z-index:1; animation:float 4.5s ease-in-out infinite; filter:drop-shadow(0 20px 30px rgba(0,0,0,0.5));}
+  @keyframes float{
+    0%,100%{transform:translateY(0) rotate(-1deg);}
+    50%{transform:translateY(-14px) rotate(1deg);}
+  }
+
+  .req-label{font-weight:700; font-size:1.05rem; margin-bottom:16px; display:flex; align-items:center; gap:8px;}
+  .req-label::before{content:"📋"; font-size:0.95rem;}
+  .tag-row{display:flex; flex-wrap:wrap; gap:14px; margin-bottom:38px;}
+  .tag-pill{
+    border:1px solid var(--line); border-radius:999px; padding:12px 24px;
+    font-size:0.95rem; cursor:pointer; transition:all .25s cubic-bezier(.2,.8,.3,1.2); background:transparent; color:var(--ink);
+    position:relative;
+  }
+  .tag-pill:hover{border-color:var(--red); color:var(--red); transform:translateY(-2px);}
+  .tag-pill.active{
+    border-color:var(--red); color:#fff;
+    background:linear-gradient(135deg, var(--red), #b8241c);
+    box-shadow:0 8px 20px rgba(232,54,46,0.35);
+    transform:translateY(-2px);
+  }
+
+  /* dynamic per-service fields */
+  .service-section{width:100%; margin-bottom:10px; animation:fadeUp .4s ease both;}
+  .service-section .field{margin-bottom:24px;}
+  .service-section select,
+  .service-section textarea{
+    width:100%; padding:13px 15px; border:1px solid var(--line); border-radius:10px;
+    font-size:0.95rem; background:rgba(255,255,255,0.03); color:var(--ink);
+    outline:none; box-sizing:border-box; transition:border-color .25s, box-shadow .25s, background .25s;
+  }
+  .service-section select:hover,
+  .service-section textarea:hover{border-color:rgba(255,255,255,0.28);}
+  .service-section textarea{min-height:90px; resize:vertical;}
+  .service-section select:focus,
+  .service-section textarea:focus{
+    border-color:var(--red); box-shadow:0 0 0 4px rgba(232,54,46,0.14); background:rgba(255,255,255,0.05);
+  }
+  .service-section select option{background:#0d1420; color:var(--ink);}
+  .contact-right hr{border:none; border-top:1px solid var(--line); margin:10px 0 30px;}
+
+  .field{margin-bottom:30px; position:relative;}
+  .field label{
+    display:block; font-size:0.85rem; color:var(--ink-dim); margin-bottom:10px; font-weight:500;
+    letter-spacing:0.02em;
+  }
+  .field input{
+    width:100%; background:transparent; border:none; border-bottom:1px solid var(--line);
+    padding:9px 2px; color:var(--ink); font-size:1rem; outline:none; transition:border-color .25s, box-shadow .25s;
+  }
+  .field input:hover{border-bottom-color:rgba(255,255,255,0.3);}
+  .field input:focus{border-bottom-color:var(--red); box-shadow:0 1px 0 0 var(--red);}
+  .field input::placeholder{color:var(--ink-faint);}
+  .verify-btn{
+    position:absolute; right:0; top:32px;
+    border:1px solid var(--red); color:var(--red); background:transparent;
+    border-radius:999px; padding:8px 18px; font-size:0.82rem; font-weight:600; cursor:pointer;
+    transition:all .25s;
+  }
+  .verify-btn:hover{background:var(--red); color:#fff; box-shadow:0 6px 16px rgba(232,54,46,0.3); transform:translateY(-1px);}
+
+  .human-row{
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px; margin-top:14px;
+  }
+  .human-check{
+    display:flex; align-items:center; gap:14px; border:1px solid var(--line); border-radius:10px;
+    padding:14px 18px; background:rgba(255,255,255,0.02); font-size:0.95rem;
+    transition:border-color .25s, background .25s;
+  }
+  .human-check:hover{border-color:rgba(255,255,255,0.28); background:rgba(255,255,255,0.04);}
+  .human-check input[type=checkbox]{width:18px; height:18px; accent-color:var(--red); cursor:pointer;}
+  .submit-btn{
+    border:1px solid var(--red); color:var(--ink); background:transparent;
+    border-radius:999px; padding:15px 34px; font-size:1rem; font-weight:600; cursor:pointer;
+    display:inline-flex; align-items:center; gap:8px; transition:all .25s cubic-bezier(.2,.8,.3,1.2);
+    position:relative; overflow:hidden;
+  }
+  .submit-btn:hover{
+    background:linear-gradient(135deg, var(--red), #b8241c); color:#fff;
+    box-shadow:0 12px 28px rgba(232,54,46,0.4); transform:translateY(-2px);
+  }
+  .submit-btn:active{transform:translateY(0) scale(0.98);}
+  .submit-btn:disabled{opacity:0.5; cursor:not-allowed; transform:none; box-shadow:none;}
+
+  .success-msg{
+    display:none; align-items:center; gap:14px;
+    margin-top:24px; padding:18px 22px;
+    border:1px solid #3ecf7a; border-radius:12px;
+    background:rgba(62,207,122,0.08); color:#eafff2;
+    font-size:1rem; font-weight:600;
+    opacity:0; transform:translateY(-6px) scale(0.98);
+    transition:opacity .4s ease, transform .4s cubic-bezier(.2,.9,.3,1.4);
+    box-shadow:0 10px 30px -10px rgba(62,207,122,0.4);
+  }
+  .success-msg.show{display:flex; opacity:1; transform:translateY(0) scale(1);}
+  .success-msg .emoji{font-size:1.4rem; animation:pop .5s ease;}
+  @keyframes pop{
+    0%{transform:scale(0.5) rotate(-10deg); opacity:0;}
+    60%{transform:scale(1.15) rotate(4deg); opacity:1;}
+    100%{transform:scale(1) rotate(0);}
+  }
+  .field-error{
+    border-color:var(--red) !important;
+    animation:shake .35s ease;
+  }
+  input.field-error{border-bottom-color:var(--red) !important;}
+  @keyframes shake{
+    0%,100%{transform:translateX(0);}
+    25%{transform:translateX(-4px);}
+    75%{transform:translateX(4px);}
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--bg-navy); padding:70px 0 30px; margin-top:40px;
+    position:relative; border-top:1px solid transparent;
+    background-image:linear-gradient(var(--bg-navy), var(--bg-navy)), linear-gradient(90deg, transparent, var(--red), transparent);
+    background-origin:border-box; background-clip:padding-box, border-box;
+  }
+  .footer-top{
+    display:grid; grid-template-columns:1.3fr 0.7fr 0.7fr 1.1fr; gap:30px; margin-bottom:50px;
+  }
+  .footer-logo{display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.15rem; margin-bottom:20px;}
+  .footer-logo .mark span{position:absolute; width:9px; height:9px;}
+  .socials{display:flex; gap:14px;}
+  .social-icon{
+    width:34px; height:34px; border-radius:50%; border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-size:0.9rem;
+    transition:all .25s;
+  }
+  .social-icon:hover{border-color:var(--red); color:var(--red); background:rgba(232,54,46,0.1); transform:translateY(-3px);}
+  .footer-top h5{font-size:1rem; font-weight:600; margin-bottom:16px;}
+  .footer-top li{padding:7px 0;}
+  .footer-top a{color:var(--ink-dim); font-size:0.92rem; transition:color .2s;}
+  .footer-top a:hover{color:var(--ink);}
+  .newsletter{display:flex; margin-top:12px;}
+  .newsletter input{
+    flex:1; background:rgba(255,255,255,0.04); border:1px solid var(--line); border-radius:8px 0 0 8px;
+    padding:13px 14px; color:var(--ink); font-size:0.85rem; outline:none; transition:border-color .2s;
+  }
+  .newsletter input:focus{border-color:var(--red);}
+  .newsletter button{
+    background:var(--red); border:none; border-radius:0 8px 8px 0; padding:0 20px; color:#fff; font-weight:700; cursor:pointer;
+    transition:background .2s;
+  }
+  .newsletter button:hover{background:#c92a22;}
+  .resources{border-top:1px solid var(--line); padding-top:36px; margin-bottom:36px;}
+  .resources h5{color:var(--ink-dim); font-size:0.85rem; letter-spacing:0.05em; margin-bottom:20px; text-transform:uppercase;}
+  .res-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:30px;}
+  .res-grid a{display:block; color:var(--ink-dim); font-size:0.9rem; padding:6px 0; transition:color .2s, transform .2s;}
+  .res-grid a:hover{color:var(--ink); transform:translateX(3px);}
+  .res-grid a.strong{color:var(--ink); font-weight:600;}
+  .footer-bottom{
+    border-top:1px solid var(--line); padding-top:24px; text-align:center;
+    color:var(--ink-faint); font-size:0.85rem;
+  }
+
+  @media (max-width:900px){
+    .navlinks{display:none;}
+    .steps-grid{grid-template-columns:1fr; gap:16px;}
+    .contact-grid{grid-template-columns:1fr; gap:40px;}
+    .contact-right{padding:28px 22px;}
+    .footer-top{grid-template-columns:1fr 1fr;}
+    .res-grid{grid-template-columns:1fr;}
+    .wrap{padding:0 20px;}
+    nav{padding:20px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="navbar">
+    <div class="logo"><div class="mark"><span></span><span></span><span></span><span></span></div></div>
+    <div class="navlinks">
+      <a href="index.html">Home</a>
+      <a href="#">Our Works ▾</a>
+      <a href="#">DAAS</a>
+      <a href="#">About us</a>
+      <a href="#">Blog</a>
+    </div>
+    <a class="cta-btn" href="#">Let's Talk ↗</a>
+  </div>
+</nav>
+
+<header class="page-head wrap">
+  <div class="eyebrow">CONTACT</div>
+  <h1>Let's Talk</h1>
+</header>
+
+<section class="steps wrap">
+  <div class="steps-grid">
+    <div class="step"><span class="label">step</span><span class="num">01</span><div class="name">Consultation</div></div>
+    <div class="step"><span class="label">step</span><span class="num">02</span><div class="name">Requirement</div></div>
+    <div class="step"><span class="label">step</span><span class="num">03</span><div class="name">Specification &amp; Design</div></div>
+    <div class="step"><span class="label">step</span><span class="num">04</span><div class="name">Development</div></div>
+    <div class="step"><span class="label">step</span><span class="num">05</span><div class="name">Testing &amp; Optimization</div></div>
+    <div class="step"><span class="label">step</span><span class="num">06</span><div class="name">Launch &amp; Maintenance</div></div>
+  </div>
+</section>
+
+<section class="contact wrap">
+  <div class="contact-grid">
+    <div class="contact-left">
+      <h2>Let's create something<br>incredible today?</h2>
+      <div class="rocket-wrap">
+        <svg class="rocket" viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="100" cy="300" rx="26" ry="10" fill="#f2a53c" opacity="0.85"/>
+          <path d="M100 20 C140 70 150 160 150 220 L50 220 C50 160 60 70 100 20 Z" fill="#e8362e"/>
+          <path d="M100 20 C122 70 130 150 130 210 L100 210 Z" fill="#c92a22"/>
+          <circle cx="100" cy="150" r="26" fill="#e9edf5"/>
+          <circle cx="100" cy="150" r="17" fill="#8fa6bd"/>
+          <path d="M50 190 L18 250 L50 235 Z" fill="#c9312a"/>
+          <path d="M150 190 L182 250 L150 235 Z" fill="#c9312a"/>
+          <path d="M65 220 L135 220 L122 270 L78 270 Z" fill="#e9edf5"/>
+          <path d="M85 270 L100 320 L115 270 Z" fill="#f2a53c"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="contact-right">
+      <div class="req-label">Requirements</div>
+
+      <div class="tag-row">
+        <button class="tag-pill active" type="button" onclick="showSection('website',this)">Website</button>
+        <button class="tag-pill" type="button" onclick="showSection('application',this)">Application</button>
+        <button class="tag-pill" type="button" onclick="showSection('brand',this)">Brand Identity</button>
+        <button class="tag-pill" type="button" onclick="showSection('marketing',this)">Digital Marketing</button>
+      </div>
+
+      <!-- WEBSITE -->
+      <div id="website" class="service-section">
+        <div class="field">
+          <label>Website Type</label>
+          <select>
+            <option>Business Website</option>
+            <option>E-Commerce</option>
+            <option>Portfolio</option>
+            <option>Landing Page</option>
+            <option>Blog</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Number of Pages</label>
+          <input type="number" placeholder="5">
+        </div>
+        <div class="field">
+          <label>Features Required</label>
+          <textarea rows="3" placeholder="Login, Payment, Contact Form, Chat..."></textarea>
+        </div>
+      </div>
+
+      <!-- APPLICATION -->
+      <div id="application" class="service-section" style="display:none;">
+        <div class="field">
+          <label>Application Type</label>
+          <select>
+            <option>Android</option>
+            <option>iOS</option>
+            <option>Android & iOS</option>
+            <option>Web Application</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Purpose</label>
+          <textarea rows="3" placeholder="Describe your application"></textarea>
+        </div>
+        <div class="field">
+          <label>Required Features</label>
+          <textarea rows="3" placeholder="Login, Payment, GPS, Chat..."></textarea>
+        </div>
+      </div>
+
+      <!-- BRAND -->
+      <div id="brand" class="service-section" style="display:none;">
+        <div class="field">
+          <label>Services Required</label>
+          <select>
+            <option>Logo Design</option>
+            <option>Complete Brand Identity</option>
+            <option>Business Card</option>
+            <option>Social Media Kit</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Company Name</label>
+          <input type="text">
+        </div>
+        <div class="field">
+          <label>Industry</label>
+          <input type="text">
+        </div>
+      </div>
+
+      <!-- MARKETING -->
+      <div id="marketing" class="service-section" style="display:none;">
+        <div class="field">
+          <label>Marketing Service</label>
+          <select>
+            <option>SEO</option>
+            <option>Google Ads</option>
+            <option>Meta Ads</option>
+            <option>Instagram Marketing</option>
+            <option>Email Marketing</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Website</label>
+          <input type="url" placeholder="https://example.com">
+        </div>
+        <div class="field">
+          <label>Marketing Goal</label>
+          <textarea rows="3" placeholder="Leads, Sales, Brand Awareness..."></textarea>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- COMMON DETAILS -->
+      <div class="field">
+        <label for="name">Name</label>
+        <input id="name" type="text" placeholder="Your full name">
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="name@email.com">
+      </div>
+
+<div class="field">
+    <label for="phone">Phone (Optional)</label>
+
+    <div class="phone-group">
+        <select id="countryCode" name="countryCode">
+            <option value="+91" selected>🇮🇳 +91 India</option>
+            <option value="+1">🇺🇸 +1 United States</option>
+            <option value="+1">🇨🇦 +1 Canada</option>
+            <option value="+44">🇬🇧 +44 United Kingdom</option>
+            <option value="+61">🇦🇺 +61 Australia</option>
+            <option value="+64">🇳🇿 +64 New Zealand</option>
+            <option value="+65">🇸🇬 +65 Singapore</option>
+            <option value="+60">🇲🇾 +60 Malaysia</option>
+            <option value="+66">🇹🇭 +66 Thailand</option>
+            <option value="+62">🇮🇩 +62 Indonesia</option>
+            <option value="+63">🇵🇭 +63 Philippines</option>
+            <option value="+81">🇯🇵 +81 Japan</option>
+            <option value="+82">🇰🇷 +82 South Korea</option>
+            <option value="+86">🇨🇳 +86 China</option>
+            <option value="+852">🇭🇰 +852 Hong Kong</option>
+            <option value="+886">🇹🇼 +886 Taiwan</option>
+            <option value="+49">🇩🇪 +49 Germany</option>
+            <option value="+33">🇫🇷 +33 France</option>
+            <option value="+39">🇮🇹 +39 Italy</option>
+            <option value="+34">🇪🇸 +34 Spain</option>
+            <option value="+31">🇳🇱 +31 Netherlands</option>
+            <option value="+41">🇨🇭 +41 Switzerland</option>
+            <option value="+46">🇸🇪 +46 Sweden</option>
+            <option value="+47">🇳🇴 +47 Norway</option>
+            <option value="+45">🇩🇰 +45 Denmark</option>
+            <option value="+358">🇫🇮 +358 Finland</option>
+            <option value="+48">🇵🇱 +48 Poland</option>
+            <option value="+43">🇦🇹 +43 Austria</option>
+            <option value="+90">🇹🇷 +90 Turkey</option>
+            <option value="+7">🇷🇺 +7 Russia</option>
+            <option value="+971">🇦🇪 +971 UAE</option>
+            <option value="+966">🇸🇦 +966 Saudi Arabia</option>
+            <option value="+974">🇶🇦 +974 Qatar</option>
+            <option value="+968">🇴🇲 +968 Oman</option>
+            <option value="+965">🇰🇼 +965 Kuwait</option>
+            <option value="+973">🇧🇭 +973 Bahrain</option>
+            <option value="+20">🇪🇬 +20 Egypt</option>
+            <option value="+27">🇿🇦 +27 South Africa</option>
+            <option value="+234">🇳🇬 +234 Nigeria</option>
+            <option value="+254">🇰🇪 +254 Kenya</option>
+            <option value="+55">🇧🇷 +55 Brazil</option>
+            <option value="+54">🇦🇷 +54 Argentina</option>
+            <option value="+56">🇨🇱 +56 Chile</option>
+            <option value="+52">🇲🇽 +52 Mexico</option>
+            <option value="+57">🇨🇴 +57 Colombia</option>
+            <option value="+92">🇵🇰 +92 Pakistan</option>
+            <option value="+880">🇧🇩 +880 Bangladesh</option>
+            <option value="+94">🇱🇰 +94 Sri Lanka</option>
+            <option value="+977">🇳🇵 +977 Nepal</option>
+        </select>
+
+        <input
+            id="phone"
+            type="tel"
+            placeholder="98765 43210"
+        >
+    </div>
+</div>
+
+      <div class="human-row">
+        <label class="human-check">
+          <input type="checkbox" id="human-check">
+          I am human
+        </label>
+        <button class="submit-btn" id="submit-btn" type="button">Submit →</button>
+      </div>
+
+      <div class="success-msg" id="success-msg">
+        <span class="emoji">🎉✅</span>
+        <span id="success-text">Your contact details have been submitted successfully! 🚀 We'll be in touch soon 😊</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo"><div class="mark" style="position:relative; width:22px; height:22px;"><span style="top:0;left:0;background:var(--ink);"></span><span style="top:0;left:13px;"></span><span style="top:13px;left:0;"></span><span style="top:13px;left:13px;background:var(--red);"></span></div>ZING<b>BIZZ</b></div>
+        <div class="socials">
+          <a class="social-icon" href="#">f</a>
+          <a class="social-icon" href="#">◎</a>
+          <a class="social-icon" href="#">𝕏</a>
+          <a class="social-icon" href="#">in</a>
+        </div>
+      </div>
+      <div>
+        <h5>Subscribe to our Newsletter</h5>
+        <div class="newsletter">
+          <input type="email" placeholder="name@email.com">
+          <button>→</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="resources">
+      <h5>Useful Resources</h5>
+      <div class="res-grid">
+        <div>
+          <a href="#">Front-end Development</a>
+          <a class="strong" href="#">CSS-Tricks</a>
+          <a href="#">SEO</a>
+          <a href="#">Web Development Learning</a>
+          <a class="strong" href="#">Codecademy</a>
+          <a href="#">Digital Marketing Resources</a>
+          <a class="strong" href="#">Sprout Social</a>
+        </div>
+        <div>
+          <a href="#">UX/UI Design</a>
+          <a class="strong" href="#">Smashing Magazine</a>
+          <a href="#">Software Development</a>
+          <a href="#">GitHub</a>
+          <a href="#">Web Development Q&amp;A</a>
+          <a class="strong" href="#">StackOverflow</a>
+          <a href="#">SEO and Content Marketing</a>
+          <a class="strong" href="#">Ahrefs Blog</a>
+        </div>
+        <div>
+          <a href="#">Digital Marketing</a>
+          <a class="strong" href="#">HubSpot Academy</a>
+          <a href="#">Full-Stack Development</a>
+          <a href="#">DigitalOcean Community</a>
+          <a href="#">Modern Web Development</a>
+          <a class="strong" href="#">Web.dev</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">© 2026 ZingBizz. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  // Switch between Website / Application / Brand / Marketing field sets
+  function showSection(section, button){
+    document.querySelectorAll('.service-section').forEach(div=>{
+      div.style.display = 'none';
+    });
+    document.getElementById(section).style.display = 'block';
+
+    document.querySelectorAll('.tag-pill').forEach(btn=>{
+      btn.classList.remove('active');
+    });
+    button.classList.add('active');
+  }
+
+  // Submit handling
+  const submitBtn = document.getElementById('submit-btn');
+  const successMsg = document.getElementById('success-msg');
+  const successText = document.getElementById('success-text');
+  const nameInput = document.getElementById('name');
+  const emailInput = document.getElementById('email');
+  const humanCheck = document.getElementById('human-check');
+
+  const messages = [
+    "Your contact details have been submitted successfully! 🚀 We'll be in touch soon 😊",
+    "Woohoo! 🎉 Your details are in — talk soon! 👋",
+    "All set! ✅ Your message has been sent successfully 💌"
+  ];
+
+  submitBtn.addEventListener('click', () => {
+    let valid = true;
+
+    [nameInput, emailInput].forEach(input => {
+      if (!input.value.trim()) {
+        input.classList.add('field-error');
+        valid = false;
+      } else {
+        input.classList.remove('field-error');
+      }
+    });
+
+    const humanBox = humanCheck.parentElement;
+    if (!humanCheck.checked) {
+      valid = false;
+      humanBox.style.border = '1px solid #e8362e';
+    } else {
+      humanBox.style.border = '';
+    }
+
+    if (!valid) {
+      successMsg.classList.remove('show');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    setTimeout(() => {
+      const msg = messages[Math.floor(Math.random() * messages.length)];
+      successText.textContent = msg;
+      successMsg.classList.add('show');
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit →';
+
+      // reset form
+      nameInput.value = '';
+      emailInput.value = '';
+      document.getElementById('phone').value = '';
+      humanCheck.checked = false;
+      document.querySelectorAll('.service-section input, .service-section textarea').forEach(el => el.value = '');
+      document.querySelectorAll('.service-section select').forEach(el => el.selectedIndex = 0);
+
+      successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 700);
+  });
+</script>
+
+</body>
+</html>

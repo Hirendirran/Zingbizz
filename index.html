@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZingBizz — Full-Service Design & Digital Agency</title>
+<style>
+  :root{
+    --bg-void:#050a14;
+    --bg-navy:#0a1120;
+    --bg-panel:#0e1526;
+    --blue-glow:#2a7fd6;
+    --blue-bright:#3ea0f5;
+    --red:#e8362e;
+    --ink:#eef2fa;
+    --ink-dim:#9aa7c2;
+    --ink-faint:#5c6a8a;
+    --cream:#f3f5fa;
+    --line: rgba(255,255,255,0.08);
+    --font-display: 'Zing Display', 'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-body: 'Inter', 'Segoe UI', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-void);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  img{max-width:100%; display:block;}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  .wrap{max-width:1200px; margin:0 auto; padding:0 32px;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(5,10,20,0.75);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:76px;
+  }
+  .logo{display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-weight:700; font-size:1.15rem; letter-spacing:0.02em;}
+  .logo .mark{
+    width:26px; height:26px; position:relative; flex:none;
+  }
+  .logo .mark span{position:absolute; width:11px; height:11px; background:var(--red);}
+  .logo .mark span:nth-child(1){top:0; left:0;}
+  .logo .mark span:nth-child(2){top:0; left:15px; background:#ffffff22;}
+  .logo .mark span:nth-child(3){top:15px; left:0; background:#ffffff22;}
+  .logo .mark span:nth-child(4){top:15px; left:15px;}
+  .logo b{font-weight:800;}
+  .navlinks{display:flex; align-items:center; gap:36px; font-size:0.92rem; color:var(--ink-dim);}
+  .navlinks a{transition:color .2s;}
+  .navlinks a:hover{color:var(--ink);}
+  .cta-btn{
+    background:var(--ink); color:var(--bg-void); font-weight:600; font-size:0.88rem;
+    padding:11px 22px; border-radius:999px; display:inline-flex; align-items:center; gap:6px;
+    transition:transform .2s, background .2s;
+  }
+  .cta-btn:hover{transform:translateY(-2px); background:var(--blue-bright); color:#fff;}
+  .cta-btn.ghost{background:transparent; border:1px solid var(--line); color:var(--ink);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:640px;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding-top:60px;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 700px 500px at 50% 28%, rgba(62,160,245,0.35), transparent 70%),
+      linear-gradient(180deg, #060b16 0%, #060b16 60%, #081020 100%);
+  }
+  .hero-orb{
+    position:absolute; top:78px; left:50%; transform:translateX(-50%);
+    width:170px; height:170px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #dfeaff, #6fb3ff 40%, #1a4d8f 75%, #08152b 100%);
+    box-shadow:0 0 90px 30px rgba(62,160,245,0.45), 0 0 200px 80px rgba(62,160,245,0.15);
+    animation:orbPulse 5s ease-in-out infinite;
+  }
+  @keyframes orbPulse{
+    0%,100%{box-shadow:0 0 90px 30px rgba(62,160,245,0.45), 0 0 200px 80px rgba(62,160,245,0.15);}
+    50%{box-shadow:0 0 110px 40px rgba(62,160,245,0.6), 0 0 240px 100px rgba(62,160,245,0.22);}
+  }
+  .hero-labels{
+    position:absolute; top:60px; left:0; right:0;
+    display:flex; justify-content:center; gap:170px;
+    font-size:0.78rem; letter-spacing:0.12em; color:var(--ink-faint); text-transform:uppercase;
+  }
+  .hero-labels span:nth-child(2){margin-top:34px;}
+  .hero-content{
+    position:relative; z-index:2;
+    padding:48px 32px 40px;
+    display:flex; align-items:flex-end; justify-content:space-between; gap:24px;
+    flex-wrap:wrap;
+  }
+  .hero-content h1{
+    font-family:var(--font-display); font-weight:700;
+    font-size:clamp(1.8rem, 3.4vw, 2.7rem);
+    max-width:640px; line-height:1.15; letter-spacing:-0.01em;
+  }
+  .hero-side{display:flex; flex-direction:column; align-items:flex-end; gap:14px;}
+  .hero-bubble{
+    background:var(--ink); color:var(--bg-void); font-size:0.85rem; font-weight:600;
+    padding:9px 18px; border-radius:999px;
+  }
+
+  /* ---------- INTRO PANEL ---------- */
+  .intro{
+    background:var(--cream); color:#0d1420;
+    padding:70px 0 80px;
+  }
+  .intro .tag{display:flex; align-items:center; gap:8px; font-weight:800; letter-spacing:0.03em; margin-bottom:26px;}
+  .intro .tag .mark span{background:var(--red);}
+  .intro .tag .mark span:nth-child(2), .intro .tag .mark span:nth-child(3){background:#0d1420;}
+  .intro h2{
+    font-family:var(--font-display); font-weight:600; font-size:clamp(1.6rem,3vw,2.4rem);
+    max-width:800px; line-height:1.3; color:#111a2c;
+  }
+  .intro h2 em{font-style:normal; color:var(--red);}
+
+  /* ---------- SERVICES ---------- */
+  .services{background:var(--bg-void); padding:90px 0;}
+  .section-title{
+    font-family:var(--font-display); font-weight:700; text-align:center;
+    font-size:clamp(1.8rem,3.4vw,2.6rem); margin-bottom:56px;
+  }
+  .svc-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:22px;
+  }
+  .svc-card{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:14px;
+    padding:38px 24px; text-align:center;
+    transition:transform .25s, border-color .25s, background .25s;
+  }
+  .svc-card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(62,160,245,0.5);
+    background:#101a30;
+  }
+  .svc-icon{
+    width:54px; height:54px; margin:0 auto 20px;
+    display:flex; align-items:center; justify-content:center;
+    border-radius:50%; border:1px solid var(--line);
+    color:var(--blue-bright);
+  }
+  .svc-card h3{font-size:1.02rem; font-weight:600; letter-spacing:0.01em;}
+
+  /* ---------- STATS ---------- */
+  .stats-band{
+    position:relative; background:var(--bg-navy); padding:70px 0 0;
+  }
+  .stats-panel{
+    max-width:1000px; margin:0 auto; background:var(--bg-panel);
+    border:1px solid var(--line); border-radius:20px;
+    padding:44px 20px; display:flex; justify-content:space-around; flex-wrap:wrap; gap:30px;
+  }
+  .stat{text-align:center;}
+  .stat .icon{color:var(--blue-bright); margin-bottom:10px; font-size:1.2rem;}
+  .stat .num{font-family:var(--font-display); font-weight:800; font-size:2.4rem; color:var(--ink);}
+  .stat .label{color:var(--ink-dim); font-size:0.85rem; margin-top:4px;}
+
+  .change-game{
+    position:relative; margin-top:60px;
+    background:radial-gradient(ellipse 900px 500px at 50% 100%, #0f5bb8, #082e63 55%, transparent 80%),
+                linear-gradient(180deg, var(--bg-navy), #05397a 140%);
+    border-radius:60% 60% 0 0 / 90px 90px 0 0;
+    padding:90px 32px 100px;
+    text-align:center;
+  }
+  .change-game h2{
+    font-family:var(--font-display); font-weight:700; font-size:clamp(1.9rem,4vw,2.9rem);
+    line-height:1.2;
+  }
+  .change-game p{color:rgba(255,255,255,0.75); margin:18px auto 30px; max-width:420px;}
+  .change-game .cta-btn{background:#fff; color:#0a1e3d;}
+
+  /* ---------- CLIENTS ---------- */
+  .clients{background:var(--cream); color:#0d1420; padding:70px 0;}
+  .clients h2{
+    text-align:center; font-family:var(--font-display); font-weight:700;
+    font-size:clamp(1.5rem,2.6vw,2rem); margin-bottom:40px;
+  }
+  .client-grid{
+    display:grid; grid-template-columns:repeat(6,1fr); gap:1px;
+    background:rgba(0,0,0,0.08); border:1px solid rgba(0,0,0,0.08);
+  }
+  .client-cell{
+    background:var(--cream); min-height:100px;
+    display:flex; align-items:center; justify-content:center;
+    padding:16px; font-weight:700; font-size:0.85rem; text-align:center; color:#334;
+  }
+
+  /* ---------- EXPERTISE ---------- */
+  .expertise{background:var(--bg-void); padding:100px 0;}
+  .expertise .eyebrow{
+    text-align:center; color:var(--ink-faint); letter-spacing:0.2em; font-size:0.75rem; margin-bottom:8px;
+  }
+  .expertise h2{
+    text-align:center; font-family:var(--font-display); font-weight:700;
+    font-size:clamp(1.8rem,3.4vw,2.6rem); margin-bottom:56px;
+  }
+  .exp-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px;}
+  .exp-col h3{color:var(--red); font-weight:700; margin-bottom:18px; font-size:1.05rem;}
+  .exp-col li{
+    color:var(--ink-dim); font-size:0.92rem; padding:10px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .exp-col li:first-of-type{border-top:1px solid var(--line);}
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testimonials{background:var(--bg-void); padding:60px 0 100px;}
+  .test-inner{display:grid; grid-template-columns:0.8fr 1fr 1fr; gap:26px; align-items:start;}
+  .test-inner h2{font-family:var(--font-display); font-weight:700; font-size:clamp(1.7rem,3vw,2.3rem); line-height:1.25;}
+  .test-card{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:14px; padding:30px;
+  }
+  .test-card .quote-mark{color:var(--blue-bright); font-size:1.8rem; font-family:Georgia, serif; margin-bottom:8px;}
+  .test-card p{color:var(--ink-dim); font-size:0.92rem; line-height:1.65; margin-bottom:20px;}
+  .test-person{display:flex; align-items:center; gap:12px;}
+  .avatar{width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,var(--blue-bright),#0d3a70);}
+  .test-person b{display:block; font-size:0.9rem;}
+  .test-person span{color:var(--ink-faint); font-size:0.78rem;}
+
+  /* ---------- FIT ---------- */
+  .fit{background:var(--bg-navy); padding:90px 0;}
+  .fit h2{font-family:var(--font-display); font-weight:700; font-size:clamp(1.8rem,3.2vw,2.4rem); margin-bottom:48px;}
+  .fit-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px;}
+  .fit-col h3{font-size:1rem; font-weight:700; margin-bottom:20px; display:flex; align-items:center; gap:8px;}
+  .fit-col.good h3{color:#4ade80;}
+  .fit-col.bad h3{color:#f87171;}
+  .fit-col li{color:var(--ink-dim); font-size:0.92rem; padding:9px 0; display:flex; gap:10px;}
+  .fit-col.good li::before{content:"✓"; color:#4ade80; font-weight:700;}
+  .fit-col.bad li::before{content:"✕"; color:#f87171; font-weight:700;}
+
+  /* ---------- ARTICLES ---------- */
+  .articles{background:var(--cream); color:#0d1420; padding:90px 0;}
+  .articles h2{font-family:var(--font-display); font-weight:700; font-size:clamp(1.7rem,3vw,2.3rem); margin-bottom:8px;}
+  .articles p.sub{color:#5a6478; max-width:500px; margin-bottom:44px;}
+  .art-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  .art-card{background:#fff; border-radius:14px; overflow:hidden; border:1px solid rgba(0,0,0,0.06);}
+  .art-thumb{height:140px; background:linear-gradient(135deg,#0a1a33,#1c4a86); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; letter-spacing:0.05em;}
+  .art-body{padding:18px;}
+  .art-meta{font-size:0.72rem; color:#8a93a8; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.04em;}
+  .art-body h4{font-size:0.95rem; font-weight:700; line-height:1.4;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--bg-void); border-top:1px solid var(--line); padding:70px 0 30px;}
+  .footer-top{display:grid; grid-template-columns:1.4fr 1fr 1fr 1.3fr; gap:30px; margin-bottom:50px;}
+  .footer-top h5{font-size:0.82rem; color:var(--ink-faint); margin-bottom:16px; text-transform:uppercase; letter-spacing:0.05em;}
+  .footer-top li{padding:6px 0;}
+  .footer-top a{color:var(--ink-dim); font-size:0.9rem; transition:color .2s;}
+  .footer-top a:hover{color:var(--ink);}
+  .newsletter{display:flex; margin-top:10px;}
+  .newsletter input{
+    flex:1; background:var(--bg-panel); border:1px solid var(--line); border-radius:8px 0 0 8px;
+    padding:12px 14px; color:var(--ink); font-size:0.85rem;
+  }
+  .newsletter button{
+    background:var(--red); border:none; border-radius:0 8px 8px 0; padding:0 18px; color:#fff; font-weight:700; cursor:pointer;
+  }
+  .footer-bottom{
+    border-top:1px solid var(--line); padding-top:24px; text-align:center;
+    color:var(--ink-faint); font-size:0.8rem;
+  }
+
+  @media (max-width:900px){
+    .navlinks{display:none;}
+    .svc-grid, .exp-grid, .art-grid{grid-template-columns:repeat(2,1fr);}
+    .client-grid{grid-template-columns:repeat(3,1fr);}
+    .test-inner, .fit-grid{grid-template-columns:1fr;}
+    .footer-top{grid-template-columns:1fr 1fr;}
+    .hero-labels{gap:70px; font-size:0.65rem;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo"><div class="mark"><span></span><span></span><span></span><span></span></div>ZING<b>BIZZ</b></div>
+    <div class="navlinks">
+      <a href="#">Home</a>
+      <a href="#services">Our Works ▾</a>
+      <a href="#">DAAS</a>
+      <a href="#">About us</a>
+      <a href="#articles">Blog</a>
+    </div>
+    <a class="cta-btn" href="contact.html">Let's Talk ↗</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-labels"><span>// Design</span><span>// Development</span><span>// Marketing</span></div>
+  <div class="hero-orb"></div>
+  <div class="hero-content wrap">
+    <h1>Everything Your Brand Needs.<br>Working Together.</h1>
+    <div class="hero-side">
+      <div class="hero-bubble">Hi! I am ZingBizz</div>
+      <a class="cta-btn ghost" href="#services">See What We Do</a>
+    </div>
+  </div>
+</section>
+
+<section class="intro">
+  <div class="wrap">
+    <div class="tag"><div class="mark"><span></span><span></span><span></span><span></span></div>ZINGBIZZ</div>
+    <h2>We are a full-service design and digital agency, helping brands grow with strategy, craft, and <em>technology working as one</em>.</h2>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <h2 class="section-title">Our Core Services</h2>
+    <div class="svc-grid">
+      <div class="svc-card"><div class="svc-icon">📣</div><h3>Branding</h3></div>
+      <div class="svc-card"><div class="svc-icon">🎯</div><h3>Logo Design</h3></div>
+      <div class="svc-card"><div class="svc-icon">🌐</div><h3>Website Development</h3></div>
+      <div class="svc-card"><div class="svc-icon">📱</div><h3>App Development</h3></div>
+      <div class="svc-card"><div class="svc-icon">📈</div><h3>Digital Marketing</h3></div>
+      <div class="svc-card"><div class="svc-icon">🔗</div><h3>Management</h3></div>
+      <div class="svc-card"><div class="svc-icon">🎬</div><h3>Production</h3></div>
+      <div class="svc-card"><div class="svc-icon">🛠️</div><h3>Design As A Service</h3></div>
+      <div class="svc-card"><div class="svc-icon">🗄️</div><h3>Custom ERP Solutions</h3></div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-band">
+  <div class="wrap">
+    <div class="stats-panel">
+      <div class="stat"><div class="icon">◆</div><div class="num">&gt; 8Y</div><div class="label">Experience</div></div>
+      <div class="stat"><div class="icon">◆</div><div class="num">&gt; 600</div><div class="label">Projects Completed</div></div>
+      <div class="stat"><div class="icon">◆</div><div class="num">&gt; 100</div><div class="label">Happy Clients</div></div>
+    </div>
+  </div>
+  <div class="change-game">
+    <h2>We are here<br>to change the game</h2>
+    <p>Reach us to discover how we can help you</p>
+    <a class="cta-btn" href="contact.html">Let's Talk ↗</a>
+  </div>
+</section>
+
+<section class="clients">
+  <div class="wrap">
+    <h2>Our Clients are winning</h2>
+<div class="client-grid">
+    <div class="client-cell">HYPX</div>
+    <div class="client-cell">Colors</div>
+    <div class="client-cell">Chennai</div>
+    <div class="client-cell">LeedsApp</div>
+    <div class="client-cell">11:11</div>
+    <div class="client-cell">EIP Academy</div>
+    <div class="client-cell">Piece of Pippy</div>
+    <div class="client-cell">Candy Co.</div>
+    <div class="client-cell">V Y R E</div>
+    <div class="client-cell">Your Cue</div>
+    <div class="client-cell">Susee</div>
+    <div class="client-cell">StanSoft</div>
+    <div class="client-cell">Fortune</div>
+    <div class="client-cell">Shreya's</div>
+    <div class="client-cell">Brain Booster</div>
+    <div class="client-cell">Chennai Education</div>
+    <div class="client-cell">Manoj Bharath</div>
+
+    <div class="client-cell">Apex Technologies</div>
+    <div class="client-cell">BluePixel Studio</div>
+    <div class="client-cell">CodeCraft Solutions</div>
+    <div class="client-cell">NextGen Digital</div>
+    <div class="client-cell">VisionTech</div>
+    <div class="client-cell">Spark Innovations</div>
+    <div class="client-cell">Bright Minds Academy</div>
+    <div class="client-cell">Urban Nest</div>
+    <div class="client-cell">Elite Interiors</div>
+    <div class="client-cell">GreenLeaf Organics</div>
+    <div class="client-cell">Nova Healthcare</div>
+    <div class="client-cell">Skyline Builders</div>
+    <div class="client-cell">Pixel Works</div>
+    <div class="client-cell">Creative Hive</div>
+    <div class="client-cell">Digital Nexus</div>
+    <div class="client-cell">Fusion Media</div>
+    <div class="client-cell">CloudSphere</div>
+    <div class="client-cell">Prime Solutions</div>
+    <div class="client-cell">Alpha Systems</div>
+    <div class="client-cell">Orbit Technologies</div>
+    <div class="client-cell">Zenith Labs</div>
+    <div class="client-cell">Future Edge</div>
+    <div class="client-cell">Infinity Soft</div>
+    <div class="client-cell">Vertex Solutions</div>
+    <div class="client-cell">Royal Foods</div>
+    <div class="client-cell">Elite Fashion</div>
+    <div class="client-cell">EduSpark</div>
+    <div class="client-cell">TechBridge</div>
+    <div class="client-cell">GrowMore Ventures</div>
+    <div class="client-cell">SmartBiz Solutions</div>
+    <div class="client-cell">Optimum Enterprises</div>
+</div>
+</section>
+
+<section class="expertise">
+  <div class="wrap">
+    <div class="eyebrow">SERVICES</div>
+    <h2 class="section-title">Our Expertise</h2>
+    <div class="exp-grid">
+      <div class="exp-col">
+        <h3>Website</h3>
+        <ul>
+          <li>Static & Dynamic Website</li>
+          <li>E-commerce Website</li>
+          <li>Search Engine Optimization</li>
+          <li>Website Maintenance</li>
+        </ul>
+      </div>
+      <div class="exp-col">
+        <h3>System</h3>
+        <ul>
+          <li>Internal Systems</li>
+          <li>ERP/CRM/CMS Systems</li>
+          <li>Chatbot Integration</li>
+          <li>Application Development</li>
+        </ul>
+      </div>
+      <div class="exp-col">
+        <h3>Digital</h3>
+        <ul>
+          <li>Performance Marketing</li>
+          <li>Online Ads</li>
+          <li>App Marketing</li>
+        </ul>
+      </div>
+      <div class="exp-col">
+        <h3>Creative</h3>
+        <ul>
+          <li>Branding</li>
+          <li>Graphic Design</li>
+          <li>Data Visualization</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="wrap test-inner">
+    <h2>What our happy clients say about us</h2>
+    <div class="test-card">
+      <div class="quote-mark">"</div>
+      <p>Talented, dedicated and professional right from project planning to budget and been on top of all the understanding of what style the clients like and his delivery on that is 100%. So far we have worked with him for more!</p>
+      <div class="test-person"><div class="avatar"></div><div><b>Saravana Varma</b><span>YourCue Co-Founder</span></div></div>
+    </div>
+    <div class="test-card">
+      <div class="quote-mark">"</div>
+      <p>Solutions were great. Thanks for their knowledge and determination, our website Sukumaran was smart and trustworthy. Thank you for your hard work for everything I wished for.</p>
+      <div class="test-person"><div class="avatar"></div><div><b>Lakshminarayan Venmani</b><span>Sensay Founder</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="fit">
+  <div class="wrap">
+    <h2>Are we a good fit?</h2>
+    <div class="fit-grid">
+      <div class="fit-col good">
+        <h3>✓ Good fit</h3>
+        <ul>
+          <li>You want design that drives results, not just wins awards</li>
+          <li>You see quality work as an investment in your business growth</li>
+          <li>You expect honest communication and upfront pricing</li>
+          <li>You're ready to own your digital presence properly</li>
+        </ul>
+      </div>
+      <div class="fit-col bad">
+        <h3>✕ Probably not</h3>
+        <ul>
+          <li>You just want the cheapest option possible</li>
+          <li>You want a quick template job with no strategy</li>
+          <li>You expect premium results on a bargain budget</li>
+          <li>You don't really care about the results</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="articles" id="articles">
+  <div class="wrap">
+    <h2>Explore Our Articles</h2>
+    <p class="sub">Design thinking, conversion wins, and growth tactics. We're sharing everything we've learned building brands that actually grow.</p>
+    <div class="art-grid">
+      <div class="art-card">
+        <div class="art-thumb">SEO</div>
+        <div class="art-body"><div class="art-meta">Resource · Dec 12, 2024</div><h4>A Beginner's Guide to SEO</h4></div>
+      </div>
+      <div class="art-card">
+        <div class="art-thumb">PPC</div>
+        <div class="art-body"><div class="art-meta">Resource · Jun 1, 2024</div><h4>Understanding PPC Advertising</h4></div>
+      </div>
+      <div class="art-card">
+        <div class="art-thumb">TRENDS</div>
+        <div class="art-body"><div class="art-meta">Resource · Apr 30, 2024</div><h4>Content Marketing Trends for 2024</h4></div>
+      </div>
+      <div class="art-card">
+        <div class="art-thumb">AI</div>
+        <div class="art-body"><div class="art-meta">Resource · Apr 2, 2024</div><h4>Exploring ChatGPT's Growing Role</h4></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="logo"><div class="mark"><span></span><span></span><span></span><span></span></div>ZING<b>BIZZ</b></div>
+        <p style="color:var(--ink-faint); font-size:0.85rem; margin-top:14px; max-width:220px;">Full-service design and digital agency, building brands that grow.</p>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul><li><a href="#">Home</a></li><li><a href="#">Works</a></li><li><a href="#">About</a></li><li><a href="#">Blog</a></li></ul>
+      </div>
+      <div>
+        <h5>Useful Resources</h5>
+        <ul><li><a href="#">Front-end Development</a></li><li><a href="#">SEO</a></li><li><a href="#">Web Blog</a></li><li><a href="#">Sprout Social</a></li></ul>
+      </div>
+      <div>
+        <h5>Subscribe to our Newsletter</h5>
+        <div class="newsletter">
+          <input type="email" placeholder="name@email.com">
+          <button>→</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 ZingBizz. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
